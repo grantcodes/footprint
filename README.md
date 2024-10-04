@@ -1,14 +1,27 @@
-# Starter TS Module
+# Footprint
 
-This is my personal starter setup for creating TypeScript modules.
+A small tool to estimate the CO2 output of every resource on a webpage using [CO2.js](https://developers.thegreenwebfoundation.org/co2js/overview/) and the [performance API](https://developer.mozilla.org/en-US/docs/Web/API/Performance_API).
 
-## Getting started
+## Installation
 
-To get started just copy this repo, then run `npm install` and `npx @grantcodes/commit install` to install git hooks.
+```bash
+npm install @grantcodes/footprint
+```
 
-## What's in the box?
+## Usage
 
-- [@grantcodes/commit](https://github.com/grantcodes/commit) to handle commit messages
-- [tsup](https://github.com/egoist/tsup) for TypeScript building
-- [Node.js test runner](https://nodejs.org/api/test.html) for testing
-- [Biome](https://biomejs.dev) for formatting
+```js
+import { Footprint } from "@grantcodes/footprint";
+
+const footprint = new Footprint(performance);
+
+// Get an array of all loaded resources. 
+const resources = footprint.resources;
+resources.foreach(result => console.log(result.name, result.co2));
+
+// Can also get results for a specific category ("media" | "js" | "css" | "html" | "other").
+const cssResources = footprint.getCategory("css");
+
+// And get totals for the resources
+console.log(`The ${cssResources.totalBytes} bytes of css resources on this page are estimated to generate ${cssResources.totalCo2} of CO2`);
+```
