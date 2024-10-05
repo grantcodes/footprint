@@ -85,11 +85,18 @@ describe("Footprint class", () => {
     assert.strictEqual(htmlCategory.length, 2);
   });
 
-  it("should ignore resources", () => {
+  it("should ignore individual resources", () => {
     const footprint = new Footprint(performance);
     footprint.ignore(/example.com/);
     const resources = footprint.resources;
     // const htmlResources = footprint.getByCategory("html");
     assert.strictEqual(resources.length, 1);
+  });
+
+  it("should ignore multiple resources", () => {
+    const footprint = new Footprint(performance);
+    footprint.ignored = [/example.com/, /example2.com/];
+    const resources = footprint.resources;
+    assert.strictEqual(resources.length, 0);
   });
 });

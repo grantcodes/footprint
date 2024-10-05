@@ -77,6 +77,15 @@ class Footprint {
    */
   set ignored(patterns: RegExp[]) {
     this._ignored = [...patterns];
+
+    // Remove from existing resources list
+    if (this._resources.length) {
+      for (const pattern of patterns) {
+        this._resources = this._resources.filter(
+          (resource) => !resource.name.match(pattern),
+        );
+      }
+    }
   }
 
   /**
