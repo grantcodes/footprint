@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/grantcodes/footprint/compare/v1.0.4...v1.0.5) (2024-10-05)
+
+
+### Bug Fixes
+
+* remove existing entries when setting the ignored array ([b98d692](https://github.com/grantcodes/footprint/commit/b98d6927753b4830020703195b94aa302a33d37a))
+
 ## [1.0.4](https://github.com/grantcodes/footprint/compare/v1.0.3...v1.0.4) (2024-10-05)
 
 
