@@ -20,7 +20,7 @@ const resources = footprint.resources;
 resources.foreach(result => console.log(result.name, result.co2));
 
 // Can also get results for a specific category ("media" | "js" | "css" | "html" | "other").
-const cssResources = footprint.getCategory("css");
+const cssResources = footprint.getByCategory("css");
 
 // And get totals for the resources
 console.log(`The ${cssResources.totalBytes} bytes of css resources on this page are estimated to generate ${cssResources.totalCo2} of CO2`);
