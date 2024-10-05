@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/grantcodes/footprint/compare/v1.0.3...v1.0.4) (2024-10-05)
+
+
+### Bug Fixes
+
+* **npm:** fix export file extensions ([9d618ff](https://github.com/grantcodes/footprint/commit/9d618ffe6a9505f91911badf0d2bcb65400fe5f2))
+
 ## [1.0.3](https://github.com/grantcodes/footprint/compare/v1.0.2...v1.0.3) (2024-10-05)
 
 
