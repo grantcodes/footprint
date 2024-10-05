@@ -2,7 +2,7 @@ import { co2 } from "@tgwf/co2";
 
 export type ResourceCategory = "media" | "js" | "css" | "html" | "other";
 
-const co2Emission = new co2();
+const co2Emission = new co2({ model: "swd" });
 
 // @ts-ignore
 const speedEstimate = navigator?.connection?.downlink ?? 0;
@@ -101,7 +101,7 @@ class Resource {
   }
 
   get co2(): number {
-    return co2Emission.perByte(this.bytes, true);
+    return co2Emission.perByte(this.bytes, true) as number;
   }
 }
 
