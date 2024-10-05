@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/grantcodes/footprint/compare/v1.0.5...v1.0.6) (2024-10-05)
+
+
+### Continuous Integration
+
+* **actions:** add build step to release action ([e5aba8d](https://github.com/grantcodes/footprint/commit/e5aba8d49292e4a6b83c6f99ace56d4e38cdf1bc))
+
 ## [1.0.5](https://github.com/grantcodes/footprint/compare/v1.0.4...v1.0.5) (2024-10-05)
 
 
