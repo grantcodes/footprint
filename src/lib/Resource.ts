@@ -4,10 +4,8 @@ export type ResourceCategory = "media" | "js" | "css" | "html" | "other";
 
 const co2Emission = new co2({ model: "swd" });
 
-// @ts-ignore
-const speedEstimate = navigator?.connection?.downlink ?? 0;
-
 class Resource {
+  _speedEstimate = 0;
   _entry: PerformanceResourceTiming | PerformanceNavigationTiming;
   isEstimated = false;
 
@@ -23,6 +21,14 @@ class Resource {
     return this._entry.duration;
   }
 
+  set speedEstimate(speed: number) {
+    this._speedEstimate = speed;
+  }
+
+  get speedEstimate(): number {
+    return this._speedEstimate;
+  }
+
   get bytes(): number {
     // Pick the largest size from the various size properties
     const maxSize = Math.max(
@@ -34,9 +40,10 @@ class Resource {
       return maxSize;
     }
 
-    if (speedEstimate && this._entry.duration) {
+    // If no size properties are available, estimate the size based on the speed estimate.
+    if (this.speedEstimate && this._entry.duration) {
       this.isEstimated = true;
-      return Math.round(speedEstimate * this._entry.duration);
+      return Math.round(this.speedEstimate * this._entry.duration);
     }
 
     return 0;

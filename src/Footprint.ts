@@ -18,6 +18,8 @@ class FootprintResources extends Array<Resource> {
 class Footprint {
   private _ignored: RegExp[] = [];
   private _resources: Resource[] = [];
+  // @ts-ignore
+  private _speedEstimate: number = navigator?.connection?.downlink ?? 0;
 
   constructor(performance: Performance) {
     // Add all resource entries
@@ -53,7 +55,39 @@ class Footprint {
       return;
     }
     const resource = new Resource(entry);
+
     this._resources.push(resource);
+
+    // Also estimate connection speed based on transfer time when adding a resource.
+    if (
+      entry.transferSize &&
+      entry.duration &&
+      // @ts-ignore
+      !navigator?.connection?.downlink
+    ) {
+      const speedEstimate = entry.transferSize / entry.duration / 1024;
+      // If there is no estimate, or the new estimate is lower, set it as the estimated speed.
+      if (!this._speedEstimate || speedEstimate < this._speedEstimate) {
+        this.speedEstimate = speedEstimate;
+      }
+    }
+  }
+
+  /**
+   * Get the estimated connection speed
+   */
+  get speedEstimate(): number {
+    return this._speedEstimate;
+  }
+
+  /**
+   * Set the estimated connection speed for all resources
+   */
+  private set speedEstimate(speed: number) {
+    this._speedEstimate = speed;
+    for (const resource of this._resources) {
+      resource.speedEstimate = speed;
+    }
   }
 
   /**

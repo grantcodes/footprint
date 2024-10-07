@@ -1,81 +1,58 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-
 import { Resource } from "../../lib/Resource";
-
-// Fake PerformanceNavigationTiming class for nodejs & testing
-class PerformanceNavigationTiming {
-  type = "navigate";
-  startTime = 0;
-  duration = 100;
-  domComplete = 100;
-  domContentLoadedEventEnd = 50;
-  loadEventEnd = 100;
-  name = "https://example.com";
-  entryType = "navigation";
-  toJSON() {
-    return {};
-  }
-  domContentLoadedEventStart = 0;
-  domInteractive = 0;
-  loadEventStart = 0;
-  redirectCount = 0;
-  unloadEventEnd = 0;
-  unloadEventStart = 0;
-  workerStart = 0;
-  connectEnd = 0;
-  connectStart = 0;
-  decodedBodySize = 120;
-  encodedBodySize = 150;
-  domainLookupEnd = 0;
-  domainLookupStart = 0;
-  fetchStart = 0;
-  initiatorType = "navigation";
-  nextHopProtocol = "h2";
-  redirectEnd = 0;
-  redirectStart = 0;
-  requestStart = 0;
-  responseEnd = 0;
-  responseStart = 0;
-  secureConnectionStart = 0;
-  serverTiming = [];
-  transferSize = 200;
-}
+import { getPerformanceNavigationTiming } from "../_mock-performance";
 
 describe("Resource class", () => {
-  // Testing constructor and getters
-  const entry = new PerformanceNavigationTiming();
-  const resource = new Resource(entry);
-
   it("should store the entry", () => {
+    const entry = getPerformanceNavigationTiming();
+    const resource = new Resource(entry);
     assert.strictEqual(resource._entry, entry);
   });
 
   it("should return correct name", () => {
+    const entry = getPerformanceNavigationTiming();
+    const resource = new Resource(entry);
     assert.strictEqual(resource.name, "https://example.com");
   });
 
   it("should return correct duration", () => {
+    const entry = getPerformanceNavigationTiming();
+    const resource = new Resource(entry);
     assert.strictEqual(resource.duration, 100);
   });
 
   it("should return the largest byte size", () => {
+    const entry = getPerformanceNavigationTiming();
+    const resource = new Resource(entry);
     assert.strictEqual(resource.bytes, 200); // The largest of the sizes
   });
 
   it("should return correct size string", () => {
-    assert.strictEqual(resource.sizeString, "200 B");
+    const entryB = getPerformanceNavigationTiming({
+      transferSize: 200,
+    });
+    const resourceB = new Resource(entryB);
+    assert.strictEqual(resourceB.sizeString, "200 B");
 
     // Test KB
-    entry.transferSize = 3000;
-    assert.strictEqual(resource.sizeString, "2.93 KB");
+    const entryKB = getPerformanceNavigationTiming({
+      transferSize: 3000,
+    });
+    const resourceKB = new Resource(entryKB);
+    assert.strictEqual(resourceKB.sizeString, "2.93 KB");
 
     // Test MB
-    entry.transferSize = 1024 * 1024 * 5.4;
-    assert.strictEqual(resource.sizeString, "5.40 MB");
+    const entryMB = getPerformanceNavigationTiming({
+      transferSize: 1024 * 1024 * 5.4,
+    });
+    const resourceMB = new Resource(entryMB);
+    assert.strictEqual(resourceMB.sizeString, "5.40 MB");
   });
 
   it("should determine if the resource is external", () => {
+    const entry = getPerformanceNavigationTiming();
+    const resource = new Resource(entry);
     // Is external resolves to null, because window.origin.location is undefined in nodejs
     assert.strictEqual(resource.isExternal, null);
 
@@ -86,15 +63,25 @@ describe("Resource class", () => {
   });
 
   it("should calculate CO2 emissions", () => {
-    const originalCo2 = resource.co2;
-    assert.strictEqual(typeof originalCo2, "number");
-    assert.strictEqual(originalCo2 > 0, true);
+    const entryMid = getPerformanceNavigationTiming({
+      transferSize: 1000,
+    });
+    const resourceMid = new Resource(entryMid);
+    const co2Mid = resourceMid.co2;
+    assert.strictEqual(typeof co2Mid, "number");
+    assert.strictEqual(co2Mid > 0, true);
+
+    const entryLow = getPerformanceNavigationTiming({
+      transferSize: 500,
+    });
+    const resourceLow = new Resource(entryLow);
+    const entryHigh = getPerformanceNavigationTiming({
+      transferSize: 2000,
+    });
+    const resourceHigh = new Resource(entryHigh);
 
     // Assert that it grows and shrinks with the size of the resource
-    entry.transferSize = entry.transferSize * 2;
-    assert.strictEqual(resource.co2, originalCo2 * 2);
-
-    entry.transferSize = entry.transferSize / 4;
-    assert.strictEqual(resource.co2, originalCo2 / 2);
+    assert.strictEqual(resourceLow.co2, co2Mid / 2);
+    assert.strictEqual(resourceHigh.co2, co2Mid * 2);
   });
 });
