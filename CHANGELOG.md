@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/grantcodes/footprint/compare/v1.0.6...v1.0.7) (2024-10-07)
+
+
+### Bug Fixes
+
+* fix speed estimation functionality ([0f79851](https://github.com/grantcodes/footprint/commit/0f798510ee9a2cfe1c459d4f2f3560a8de220dfd))
+
 ## [1.0.6](https://github.com/grantcodes/footprint/compare/v1.0.5...v1.0.6) (2024-10-05)
 
 
