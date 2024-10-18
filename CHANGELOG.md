@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/grantcodes/footprint/compare/v1.0.8...v1.0.9) (2024-10-18)
+
+
+### Bug Fixes
+
+* **types:** export resource types ([60bc577](https://github.com/grantcodes/footprint/commit/60bc5775a4160b00696449d518177b24897cac28))
+
 ## [1.0.8](https://github.com/grantcodes/footprint/compare/v1.0.7...v1.0.8) (2024-10-18)
 
 
