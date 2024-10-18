@@ -149,4 +149,6 @@ class Footprint {
   }
 }
 
+export type { FootprintResources, Resource as FootprintResource };
+
 export { Footprint };
