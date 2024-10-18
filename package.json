@@ -1,6 +1,6 @@
 {
   "name": "@grantcodes/footprint",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Estimate the carbon footprint of web page resources",
   "type": "module",
   "main": "dist/main.cjs",
