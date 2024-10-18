@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/grantcodes/footprint/compare/v1.0.7...v1.0.8) (2024-10-18)
+
+
+### Bug Fixes
+
+* fix issue categorizing html resources ([515b522](https://github.com/grantcodes/footprint/commit/515b52270d012ca9b065c61d9b15f435f02fb5b7))
+
 ## [1.0.7](https://github.com/grantcodes/footprint/compare/v1.0.6...v1.0.7) (2024-10-07)
 
 
