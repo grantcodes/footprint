@@ -84,4 +84,66 @@ describe("Resource class", () => {
     assert.strictEqual(resourceLow.co2, co2Mid / 2);
     assert.strictEqual(resourceHigh.co2, co2Mid * 2);
   });
+
+  it("should categorize resources", () => {
+    const entry = getPerformanceNavigationTiming();
+    const resource = new Resource(entry);
+    assert.strictEqual(resource.category, "html");
+
+    const scriptEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/script.js",
+      entryType: "resource",
+    });
+    const scriptResource = new Resource(scriptEntry);
+    assert.strictEqual(scriptResource.category, "js");
+
+    const jsxEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/component.jsx",
+      entryType: "resource",
+    });
+    const jsxResource = new Resource(jsxEntry);
+    assert.strictEqual(jsxResource.category, "js");
+
+    const tsEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/component.ts",
+      entryType: "resource",
+    });
+    const tsResource = new Resource(tsEntry);
+    assert.strictEqual(tsResource.category, "js");
+
+    const cssEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/style.css",
+      entryType: "resource",
+    });
+    const cssResource = new Resource(cssEntry);
+    assert.strictEqual(cssResource.category, "css");
+
+    const sassEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/style.sass",
+      entryType: "resource",
+    });
+    const sassResource = new Resource(sassEntry);
+    assert.strictEqual(sassResource.category, "css");
+
+    const scssEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/style.scss",
+      entryType: "resource",
+    });
+    const scssResource = new Resource(scssEntry);
+    assert.strictEqual(scssResource.category, "css");
+
+    const imageEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/image.jpg",
+      entryType: "resource",
+    });
+    const imageResource = new Resource(imageEntry);
+    assert.strictEqual(imageResource.category, "media");
+
+    const mediaEntry = getPerformanceNavigationTiming({
+      name: "https://example.com/video.mp4",
+      entryType: "resource",
+    });
+    const mediaResource = new Resource(mediaEntry);
+    assert.strictEqual(mediaResource.category, "media");
+  });
 });

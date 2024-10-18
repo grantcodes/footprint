@@ -71,6 +71,10 @@ class Resource {
   get category(): ResourceCategory {
     let category: ResourceCategory = "other";
 
+    if (this._entry.entryType === "navigation") {
+      category = "html";
+    }
+
     const fileExtension = this._entry.name.includes(".")
       ? this._entry.name.split(".").pop()
       : "";
@@ -98,10 +102,6 @@ class Resource {
       )
     ) {
       category = "media";
-    }
-
-    if (this._entry.entryType === "navigation") {
-      category = "html";
     }
 
     return category;
